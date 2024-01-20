@@ -1,11 +1,13 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:gmail_settings_ui/signature.dart';
 import 'package:gmail_settings_ui/config.dart';
 import 'package:gmail_settings_ui/custom_dropdown.dart';
 import 'package:gmail_settings_ui/icons.dart';
+import 'package:gmail_settings_ui/signatureCont.dart';
 
 class GeneralSettings extends StatefulWidget {
-  const GeneralSettings({super.key});
+  const GeneralSettings({Key? key}) : super(key: key);
 
   @override
   State<GeneralSettings> createState() => _GeneralSettingsState();
@@ -24,7 +26,10 @@ class _GeneralSettingsState extends State<GeneralSettings> {
     return Row(
       children: [
         SizedBox(
-          width: width ?? MediaQuery.of(context).size.width * 0.1,
+          width: width ?? MediaQuery
+              .of(context)
+              .size
+              .width * 0.1,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -34,9 +39,9 @@ class _GeneralSettingsState extends State<GeneralSettings> {
               ),
               subtitle != null
                   ? Text(
-                      "($subtitle)",
-                      style: const TextStyle(fontSize: 10, color: Colors.grey),
-                    )
+                "($subtitle)",
+                style: const TextStyle(fontSize: 10, color: Colors.grey),
+              )
                   : const SizedBox(),
             ],
           ),
@@ -67,7 +72,8 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                 underline: const SizedBox.shrink(),
                 value: selectedLanguage,
                 items: languages
-                    .map((item) => DropdownMenuItem<String>(
+                    .map((item) =>
+                    DropdownMenuItem<String>(
                         value: item, child: Text(item)))
                     .toList(),
                 onChanged: (item) => setState(() => selectedLanguage = item),
@@ -106,7 +112,7 @@ class _GeneralSettingsState extends State<GeneralSettings> {
             value: selectedCountry,
             items: countries
                 .map((item) =>
-                    DropdownMenuItem<String>(value: item, child: Text(item)))
+                DropdownMenuItem<String>(value: item, child: Text(item)))
                 .toList(),
             onChanged: (item) => setState(() => selectedCountry = item),
           ),
@@ -149,7 +155,7 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                       menuItemStyleData: MenuItemStyleData(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         customHeights:
-                            CustomDropDown.getCustomItemsHeights(fonts),
+                        CustomDropDown.getCustomItemsHeights(fonts),
                       ),
                       iconStyleData: const IconStyleData(
                         openMenuIcon: Icon(Icons.arrow_drop_up),
@@ -177,7 +183,7 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                       menuItemStyleData: MenuItemStyleData(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         customHeights:
-                            CustomDropDown.getCustomItemsHeights(fontSizes),
+                        CustomDropDown.getCustomItemsHeights(fontSizes),
                       ),
                       iconStyleData: const IconStyleData(
                         openMenuIcon: Icon(Icons.arrow_drop_up),
@@ -205,7 +211,7 @@ class _GeneralSettingsState extends State<GeneralSettings> {
                       menuItemStyleData: MenuItemStyleData(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         customHeights:
-                            CustomDropDown.getCustomItemsHeights(colors),
+                        CustomDropDown.getCustomItemsHeights(colors),
                       ),
                       iconStyleData: const IconStyleData(
                         openMenuIcon: Icon(Icons.arrow_drop_up),
@@ -228,7 +234,10 @@ class _GeneralSettingsState extends State<GeneralSettings> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.8,
+          width: MediaQuery
+              .of(context)
+              .size
+              .width * 0.8,
           child: RichText(
             text: TextSpan(
               text: 'Drag the stars between the lists.',
@@ -236,8 +245,10 @@ class _GeneralSettingsState extends State<GeneralSettings> {
               children: <TextSpan>[
                 TextSpan(
                   text:
-                      ' The stars will rotate in the order shown below when you click successively. To learn the name of a star for search, hover your mouse over the image.',
-                  style: DefaultTextStyle.of(context).style,
+                  ' The stars will rotate in the order shown below when you click successively. To learn the name of a star for search, hover your mouse over the image.',
+                  style: DefaultTextStyle
+                      .of(context)
+                      .style,
                 ),
               ],
             ),
@@ -247,7 +258,10 @@ class _GeneralSettingsState extends State<GeneralSettings> {
           height: 5,
         ),
         settingWidget("Presets",
-            width: MediaQuery.of(context).size.width * 0.08,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * 0.08,
             isBold: false,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -276,7 +290,10 @@ class _GeneralSettingsState extends State<GeneralSettings> {
           height: 5,
         ),
         settingWidget("In use",
-            width: MediaQuery.of(context).size.width * 0.08,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * 0.08,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [StarsIcons.yellowStar],
@@ -285,7 +302,10 @@ class _GeneralSettingsState extends State<GeneralSettings> {
           height: 5,
         ),
         settingWidget("Not in use",
-            width: MediaQuery.of(context).size.width * 0.08,
+            width: MediaQuery
+                .of(context)
+                .size
+                .width * 0.08,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -321,35 +341,37 @@ class _GeneralSettingsState extends State<GeneralSettings> {
   }
 
   Widget signatureWidget() {
-    return const Text(
-      "No signatures",
-      style: TextStyle(fontWeight: FontWeight.bold),
-    );
+    return SignContainer();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(25),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        // mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          settingWidget("Language", child: languageWidget()),
-          const Divider(),
-          settingWidget("Phone Numbers", child: phoneNumberWidget()),
-          const Divider(),
-          settingWidget("Default text style",
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16), // Adjust padding as needed
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            settingWidget("Language", child: languageWidget()),
+            const Divider(),
+            settingWidget("Phone Numbers", child: phoneNumberWidget()),
+            const Divider(),
+            settingWidget(
+              "Default text style",
               subtitle:
-                  "Use the 'Remove formatting' button on the toolbar to reset the default text style",
-              child: textWidget()),
-          const Divider(),
-          settingWidget("Stars", child: starsWidget()),
-          const Divider(),
-          settingWidget("Signatures",
+              "Use the 'Remove formatting' button on the toolbar to reset the default text style",
+              child: textWidget(),
+            ),
+            const Divider(),
+            settingWidget("Stars", child: starsWidget()),
+            const Divider(),
+            settingWidget(
+              "Signatures",
               child: signatureWidget(),
-              subtitle: "appended at the end of all outgoing messages"),
-        ],
+              subtitle: "appended at the end of all outgoing messages",
+            ),
+          ],
+        ),
       ),
     );
   }
