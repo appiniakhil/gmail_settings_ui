@@ -10,7 +10,8 @@ class CText extends StatelessWidget {
   final String text;
   final FontWeight weight;
 
-  const CText({super.key, required this.text, this.weight = FontWeight.normal});
+  const CText({Key? key, required this.text, this.weight = FontWeight.normal})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class CText extends StatelessWidget {
 }
 
 class DragAndDropScreen extends StatefulWidget {
-  const DragAndDropScreen({super.key});
+  const DragAndDropScreen({Key? key}) : super(key: key);
 
   @override
   DragAndDropScreenState createState() => DragAndDropScreenState();
@@ -38,51 +39,39 @@ class DragAndDropScreenState extends State<DragAndDropScreen> {
     Star(Colors.purple[600]!),
     Star(Colors.blue[600]!),
     Star(Colors.green[600]!),
-    Star(Colors.red[600]!),
-    Star(Colors.orange[600]!),
-    Star(Colors.yellow[600]!),
-    Star(Colors.green[600]!),
-    Star(Colors.blue[600]!),
-    Star(Colors.purple[600]!),
   ];
 
   Widget buildStar(Star star) {
     return Draggable<Star>(
       data: star,
       feedback: Icon(Icons.star, color: star.color.withOpacity(0.7)),
-      childWhenDragging: const Icon(Icons.star, color: Colors.transparent),
+      childWhenDragging: Icon(Icons.star, color: Colors.transparent),
       child: Icon(Icons.star, color: star.color),
     );
   }
 
   Widget buildStarList(List<Star> stars) {
     return Row(
-      //mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: stars.map((star) => buildStar(star)).toList(),
     );
   }
 
-  Widget buildDragTargetList(bool isInUse,List<Star> starsList) {
-
+  Widget buildDragTargetList(bool isInUse, List<Star> starsList) {
     return DragTarget<Star>(
       onAccept: (star) {
-        if (isInUse) {
-          if (inUseStars.length <= 10) {
-            setState(() {
+        setState(() {
+          if (isInUse) {
+            if (inUseStars.length < 10 && !inUseStars.contains(star)) {
               inUseStars.add(star);
               notInUseStars.remove(star);
-              starsList = inUseStars;
-            });
-          }
-        } else {
-          if (notInUseStars.length <= 10) {
-            setState(() {
+            }
+          } else {
+            if (notInUseStars.length < 10 && !notInUseStars.contains(star)) {
               notInUseStars.add(star);
               inUseStars.remove(star);
-              starsList = notInUseStars;
-            });
+            }
           }
-        }
+        });
       },
       builder: (context, accepted, rejected) {
         return Container(
@@ -94,6 +83,57 @@ class DragAndDropScreenState extends State<DragAndDropScreen> {
         );
       },
     );
+  }
+
+  void _updateStars(int stars) {
+    setState(() {
+      inUseStars.clear(); // Clear the current list of in-use stars
+      notInUseStars.clear(); // Clear the current list of not-in-use stars
+
+      if (stars == 1) {
+        // Add one star to in-use stars
+        inUseStars.add(Star(Colors.yellow[600]!));
+      } else if (stars == 4) {
+        // Add four stars to in-use stars
+        inUseStars.addAll([
+          Star(Colors.yellow[600]!),
+          Star(Colors.orange[600]!),
+          Star(Colors.red[600]!),
+          Star(Colors.purple[600]!),
+        ]);
+      } else if (stars == 10) {
+        // Add all stars to in-use stars
+        inUseStars.addAll([
+          Star(Colors.yellow[600]!),
+          Star(Colors.orange[600]!),
+          Star(Colors.red[600]!),
+          Star(Colors.purple[600]!),
+          Star(Colors.blue[600]!),
+          Star(Colors.green[600]!),
+        ]);
+
+        // Add all stars to not-in-use stars
+        notInUseStars.addAll([
+          Star(Color.fromRGBO(0, 0, 0, 0))
+        ]);
+      }
+
+      if (stars != 10) {
+        // Update not-in-use stars by adding back stars that are not in use
+        notInUseStars.addAll([
+          Star(Colors.orange[600]!),
+          Star(Colors.red[600]!),
+          Star(Colors.purple[600]!),
+          Star(Colors.blue[600]!),
+          Star(Colors.green[600]!),
+        ]);
+
+        // Remove stars from not-in-use stars that are in use
+        inUseStars.forEach((inUseStar) {
+          notInUseStars.removeWhere((notInUseStar) => notInUseStar.color == inUseStar.color);
+        });
+      }
+    });
   }
 
   @override
@@ -108,7 +148,7 @@ class DragAndDropScreenState extends State<DragAndDropScreen> {
                 text: "In use: ",
                 weight: FontWeight.bold,
               ),
-              buildDragTargetList(true,inUseStars),
+              buildDragTargetList(true, inUseStars),
             ],
           ),
           const SizedBox(height: 20),
@@ -118,11 +158,48 @@ class DragAndDropScreenState extends State<DragAndDropScreen> {
                 text: "Not in use: ",
                 weight: FontWeight.bold,
               ),
-              buildDragTargetList(false,notInUseStars),
+              buildDragTargetList(false, notInUseStars),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  _updateStars(1);
+                },
+                child: const Text('1 star'),
+              ),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  _updateStars(4);
+                },
+                child: const Text('4 stars'),
+              ),
+              const SizedBox(width: 10),
+              ElevatedButton(
+                onPressed: () {
+                  _updateStars(10);
+                },
+                child: const Text('All stars'),
+              ),
             ],
           ),
         ],
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: Scaffold(
+      appBar: AppBar(
+        title: Text('Drag and Drop'),
+      ),
+      body: DragAndDropScreen(),
+    ),
+  ));
 }
