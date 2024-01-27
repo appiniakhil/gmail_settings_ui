@@ -1,10 +1,13 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:gmail_settings_ui/custom_text.dart';
+import 'package:gmail_settings_ui/drag_widget.dart';
 import 'package:gmail_settings_ui/signature.dart';
 import 'package:gmail_settings_ui/config.dart';
 import 'package:gmail_settings_ui/custom_dropdown.dart';
 import 'package:gmail_settings_ui/icons.dart';
 import 'package:gmail_settings_ui/signatureCont.dart';
+import 'package:gmail_settings_ui/star_rating_widget.dart';
 
 class GeneralSettings extends StatefulWidget {
   const GeneralSettings({Key? key}) : super(key: key);
@@ -254,88 +257,13 @@ class _GeneralSettingsState extends State<GeneralSettings> {
             ),
           ),
         ),
-        const SizedBox(
-          height: 5,
+        Row(
+          children: [
+            CustomText(text: "Presets:"),
+            StarRatingWidget(),
+          ],
         ),
-        settingWidget("Presets",
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * 0.08,
-            isBold: false,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "1 star",
-                  style: TextStyle(color: Colors.blue),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  "4 star",
-                  style: TextStyle(color: Colors.blue),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Text(
-                  "all stars",
-                  style: TextStyle(color: Colors.blue),
-                ),
-              ],
-            )),
-        const SizedBox(
-          height: 5,
-        ),
-        settingWidget("In use",
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * 0.08,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [StarsIcons.yellowStar],
-            )),
-        const SizedBox(
-          height: 5,
-        ),
-        settingWidget("Not in use",
-            width: MediaQuery
-                .of(context)
-                .size
-                .width * 0.08,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                StarsIcons.orangeStar,
-                const SizedBox(
-                  width: 12,
-                ),
-                StarsIcons.pinkStar,
-                const SizedBox(
-                  width: 12,
-                ),
-                StarsIcons.purpleStar,
-                const SizedBox(
-                  width: 12,
-                ),
-                StarsIcons.blueStar,
-                const SizedBox(
-                  width: 12,
-                ),
-                StarsIcons.pinkReport,
-                const SizedBox(
-                  width: 12,
-                ),
-                StarsIcons.yellowReport,
-                const SizedBox(
-                  width: 12,
-                ),
-                StarsIcons.check,
-              ],
-            ))
+        const DragAndDropScreen(),
       ],
     );
   }
