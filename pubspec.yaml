@@ -14,6 +14,10 @@ dependencies:
     sdk: flutter
   html_editor_enhanced:
   file_picker:
+  reorderables:
+  appflowy_editor:
+  cupertino_icons:
+  appflowy_board:
 
 dev_dependencies:
   flutter_test:
