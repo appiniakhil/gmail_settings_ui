@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gmail_settings_ui/custom_text.dart';
+import 'package:gmail_settings_ui/star_rating_widget.dart';
 
 class Star {
   final Color color;
@@ -130,7 +132,8 @@ class DragAndDropScreenState extends State<DragAndDropScreen> {
 
         // Remove stars from not-in-use stars that are in use
         inUseStars.forEach((inUseStar) {
-          notInUseStars.removeWhere((notInUseStar) => notInUseStar.color == inUseStar.color);
+          notInUseStars.removeWhere((notInUseStar) =>
+          notInUseStar.color == inUseStar.color);
         });
       }
     });
@@ -143,28 +146,12 @@ class DragAndDropScreenState extends State<DragAndDropScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
-            children: [
-              const CText(
-                text: "In use: ",
-                weight: FontWeight.bold,
-              ),
-              buildDragTargetList(true, inUseStars),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            children: [
-              const CText(
-                text: "Not in use: ",
-                weight: FontWeight.bold,
-              ),
-              buildDragTargetList(false, notInUseStars),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const CText(
+                text: "Presets: ",
+                weight: FontWeight.bold,
+              ),
               ElevatedButton(
                 onPressed: () {
                   _updateStars(1);
@@ -185,6 +172,28 @@ class DragAndDropScreenState extends State<DragAndDropScreen> {
                 },
                 child: const Text('All stars'),
               ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CText(
+                text: "In use: ",
+                weight: FontWeight.bold,
+              ),
+              buildDragTargetList(true, inUseStars),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const CText(
+                text: "Not in use: ",
+                weight: FontWeight.bold,
+              ),
+              buildDragTargetList(false, notInUseStars),
             ],
           ),
         ],
