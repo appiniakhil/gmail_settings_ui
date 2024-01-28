@@ -13,14 +13,7 @@ class StarRatingWidgetState extends State<StarRatingWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        StarOptionButton("1 star", 1, _selectedStars, _updateStars),
-        StarOptionButton("4 stars", 4, _selectedStars, _updateStars),
-        StarOptionButton("all stars", 10, _selectedStars, _updateStars),
-      ],
-    );
+    return Row();
   }
 
   void _updateStars(int stars) {
