@@ -1,11 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
-import 'package:gmail_settings_ui/custom_text.dart';
 import 'package:gmail_settings_ui/drag_widget.dart';
 import 'package:gmail_settings_ui/config.dart';
 import 'package:gmail_settings_ui/custom_dropdown.dart';
 import 'package:gmail_settings_ui/signatureCont.dart';
-import 'package:gmail_settings_ui/star_rating_widget.dart';
 
 class GeneralSettings extends StatefulWidget {
   const GeneralSettings({Key? key}) : super(key: key);
