@@ -255,12 +255,6 @@ class _GeneralSettingsState extends State<GeneralSettings> {
             ),
           ),
         ),
-        Row(
-          children: [
-            CustomText(text: "Presets:"),
-            StarRatingWidget(),
-          ],
-        ),
         const DragAndDropScreen(),
       ],
     );
